@@ -1,20 +1,13 @@
-const express = require('express');
-const usersRouter = require('./users/users.route')
-const repairsRouter = require('./repairs/repairs.route')
+import express from "express";
+import { router } from "./routes/index.js";
+
 const app = express();
 
-const calculateRequestTime = (req, res, next) => {
-  const requestTime = new Date().toISOString();
+//middlewares para aceptar cuerpos en json y url-encoded
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-  req.requestTime = requestTime;
-  next()
-}
+//rutas
+app.use("/api/v1", router);
 
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true })); 
-app.use(calculateRequestTime)
-
-app.use('/api/v1', usersRouter) //http://localhost:3000/api/v1/users
-app.use('/api/v1', repairsRouter) //http://localhost:3000/api/v1/repairs
-
-module.exports = app;
+export default app;
