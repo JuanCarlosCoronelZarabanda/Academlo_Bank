@@ -1,35 +1,30 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../config/database/database.js";
 
-const User = sequelize.define("users", {
+const Transfer = sequelize.define("transfers", {
   id: {
     primaryKey: true,
     allowNull: false,
     autoIncrement: true,
     type: DataTypes.INTEGER,
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  accountNumber: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   amount: {
     type: DataTypes.FLOAT,
-    defaultValue: 1000,
+    allowNull: false,
+  },
+  senderUserId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  receiverUserId: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   status: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true,
+    type: DataTypes.ENUM("asset", "idle"),
     allowNull: false,
+    defaultValue: "asset",
   },
 });
 
-export default User;
+export default Transfer;
